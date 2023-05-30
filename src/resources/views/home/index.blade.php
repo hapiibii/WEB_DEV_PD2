@@ -2,6 +2,16 @@
 
 @section('content')
 
-<h1>PD2 - {{ $title }}</h1>
+<p>This is the start page</p>
+
+<footer>
+
+    <div class="container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+
+</footer>
 
 @endsection
