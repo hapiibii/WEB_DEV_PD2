@@ -15,4 +15,44 @@ class AuthorController extends Controller
         return view('author.list', ['title' => 'Autori', 'items' => $items]);
 
     }
+
+    public function create() {
+
+        //display new author form
+        return view('author.form', ['title' => 'Add new author', 'author' => new Author(), ]);
+    }
+
+    //save new author
+    public function put(Request $request) {
+        
+        $validatedData = $request->validate(['name' => 'required', ]);
+
+        $author = new Author();
+        $author->name = $validatedData['name'];
+        $author->save();
+
+        return redirect('/authors');
+    }
+
+    //diaplay author update form
+    public function update(Author $author) {
+        return view('author.form', ['title' => 'Edit author', 'author' => $author, ]);
+    }
+
+    //save the edit
+    public function patch(Author $author, Request $request) {
+        $validatedData = $request->validate(['name' => 'required', ]);
+
+        
+        $author->name = $validatedData['name'];
+        $author->save();
+
+        return redirect('/authors');
+    }
+
+    //delete authors
+    public function delete(Author $author) {
+        $author->delete();
+        return redirect('/authors');
+    }
 }
