@@ -2,7 +2,10 @@
 
 @section('content')
 
-<p>This is the start page</p>
+    <h1>{{$title}}</h1>
+    <hr>
+
+<p>This is the home page</p>
 
 <footer>
 

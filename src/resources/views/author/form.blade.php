@@ -2,6 +2,9 @@
 
 @section('content')
 
+    <h1>{{$title}}</h1>
+    <hr>
+
     @if ($errors->any())
         <div class="alert alert-danger" role="alert">Woops! Fix the problem!</div>
     
