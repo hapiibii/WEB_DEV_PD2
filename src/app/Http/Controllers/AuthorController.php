@@ -7,12 +7,16 @@ use App\Models\Author;
 
 class AuthorController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //display all authors
     public function list() {
         
         $items = Author::orderBy('name', 'asc')->get();
 
-        return view('author.list', ['title' => 'Autori', 'items' => $items]);
+        return view('author.list', ['title' => 'Authors', 'items' => $items]);
 
     }
 
