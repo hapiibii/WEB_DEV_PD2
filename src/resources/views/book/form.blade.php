@@ -10,7 +10,7 @@
     
     @endif
 
-        <form method="post" action="{{ $book->exists ? '/books/patch/' . $book->id : '/books/put' }}">
+        <form method="post" action="{{ $book->exists ? '/books/patch/' . $book->id : '/books/put' }}" enctype="multipart/form-data">
             @csrf
                 <div class="mb-3">
                     <label for="book-name" class="form-label">Title</label>
@@ -25,12 +25,26 @@
                     <select id="book-author" name="author_id" class="form-select @error('author_id') is-invalid @enderror">
                         <option value="">Pick the author!</option>
                         @foreach($authors as $author)
-                            <option value="{{$author->id}}" @if ($author->id ==old('author_id', $book->aithor->id ?? false)) selected @endif>{{$author->name}}</option>
+                            <option value="{{$author->id}}" @if ($author->id == old('author_id', $book->author->id ?? false)) selected @endif>{{$author->name}}</option>
                         @endforeach
                     </select>
 
                     @error('author_id')
                         <p class="invalid-feedback">{{$errors->first('author_id')}}</p>
+                    @enderror
+                </div>
+
+                <div class="mb-3">
+                    <label for="book-genre" class="form-label">Genre</label>
+                    <select id="book-genre" name="genre_id" class="form-select @error('genre_id') is-invalid @enderror">
+                        <option value="">Pick the genre!</option>
+                        @foreach($genres as $genre)
+                            <option value="{{$genre->id}}" @if ($genre->id == old('genre_id', $book->genre->id ?? false)) selected @endif>{{$genre->name}}</option>
+                        @endforeach
+                    </select>
+
+                    @error('genre_id')
+                        <p class="invalid-feedback">{{$errors->first('genre_id')}}</p>
                     @enderror
                 </div>
 
@@ -67,6 +81,27 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="mb-3">
+                    <label for="book-image" class="form-label">Image</label>
+                    @if ($book->image)
+                        <img
+                        src="{{ asset('images/' . $book->image) }}"
+                        class="img-fluid img-thumbnail d-block mb-2"
+                        alt="{{ $book->name }}"
+                        >
+                    @endif
+                    <input
+                    type="file" accept="image/png, image/jpeg"
+                    id="book-image"
+                    name="image"
+                    class="form-control @error('image') is-invalid @enderror"
+                    >
+                    @error('image')
+                        <p class="invalid-feedback">{{ $errors->first('image') }}</p>
+                    @enderror
+                </div>
+
 
                 <button type="submit" class="btn btn-primary">{{$book->exists ? 'Update' : 'Add'}}</button>
         </form>
